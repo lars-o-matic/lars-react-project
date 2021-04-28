@@ -20,7 +20,7 @@
 
 section#game {
   text-align: center;
-  max-width: 600px;
+  max-width: 1200px;
 }
 
 ul.game-tiles {
@@ -33,4 +33,8 @@ ul.game-tiles li {
   display: flex;
   flex-direction: column;
   padding: 0 15px;
+}
+.game-tiles img {
+  max-width: 400px;
+  max-height: 400px;
 }

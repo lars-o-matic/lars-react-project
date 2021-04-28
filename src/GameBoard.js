@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GameTile from './GameTile';
+import sampleCat from './images/cat-placeholder-512-7aFH8GK.jpg'
 
 class GameBoard extends Component {
     constructor() {
@@ -13,16 +14,17 @@ class GameBoard extends Component {
         return (
             <div className="game-board">
                 <h3>Round {this.props.currentRound} of {this.props.maxRounds}</h3>
-                <p>Choose the Real photo below</p>
+                <p>Choose the Real photo below<br/>
+                    <strong>TODO</strong> randomize left vs right cats</p>
                 <div>
                     <ul className="game-tiles">
                         <GameTile photoType={this.props.photoType}
-                        imgSrc="https://place-puppy.com/200x150?a"
+                        imgSrc="https://thiscatdoesnotexist.com/"
                         isReal="false"
                         buttonText={"I'm the real "+this.props.photoType}
                         />
                         <GameTile photoType={this.props.photoType}
-                        imgSrc="https://place-puppy.com/200x150?b"
+                        imgSrc={sampleCat}
                         isReal="true"
                         buttonText={"No, I'm the real "+this.props.photoType+"!"}
                         />

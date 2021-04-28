@@ -14,7 +14,7 @@ class GameTile extends Component {
         return (
             <li>
                 <h3>This is a {this.props.photoType}</h3>
-                <img src={this.props.imgSrc} alt="a nice {this.props.photoType}"/>
+                <img src={this.props.imgSrc} alt={"a nice "+this.props.photoType}/>
                 <button>{this.props.buttonText}</button>
             </li>
         )
