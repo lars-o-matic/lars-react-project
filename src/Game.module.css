@@ -1,0 +1,11 @@
+ul.gameTiles {
+    display: flex;
+    list-style: none;
+    text-align: left;
+  }
+  ul.gameTiles li {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+  }
+  
