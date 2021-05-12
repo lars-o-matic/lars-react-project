@@ -5,10 +5,14 @@ import sampleCat from './images/cat-placeholder-512-7aFH8GK.jpg'
 class GameBoard extends Component {
     constructor() {
         super();
+        this.state = {
+            ganFirst: false
+        }
     }
 
     // properties: photoType = Cat or Person
     // currentRound, maxRounds
+    // TODO flip ganFirst randomly between true/false in each round
 
     render() {
         return (
@@ -18,16 +22,30 @@ class GameBoard extends Component {
                     <strong>TODO</strong> randomize left vs right cats</p>
                 <div>
                     <ul className="game-tiles">
-                        <GameTile photoType={this.props.photoType}
-                        imgSrc="https://thiscatdoesnotexist.com/"
-                        isReal="false"
-                        buttonText={"I'm the real "+this.props.photoType}
-                        />
-                        <GameTile photoType={this.props.photoType}
-                        imgSrc={sampleCat}
-                        isReal="true"
-                        buttonText={"No, I'm the real "+this.props.photoType+"!"}
-                        />
+                    { this.state.ganFirst 
+                        ? 
+                        <>
+                            <GameTile photoType={this.props.photoType}
+                                imgSrc="https://thiscatdoesnotexist.com/"
+                                isReal="false"
+                                buttonText={"I'm the real "+this.props.photoType} />
+                            <GameTile photoType={this.props.photoType}
+                                imgSrc={sampleCat}
+                                isReal="true"
+                                buttonText={"No, I'm the real "+this.props.photoType+"!"} />
+                        </>
+                        :
+                        <>
+                            <GameTile photoType={this.props.photoType}
+                                imgSrc={sampleCat}
+                                isReal="true"
+                                buttonText={"No, I'm the real "+this.props.photoType+"!"} />
+                            <GameTile photoType={this.props.photoType}
+                                imgSrc="https://thiscatdoesnotexist.com/"
+                                isReal="false"
+                                buttonText={"I'm the real "+this.props.photoType} />
+                        </>
+                    }
                     </ul>
                 </div>
             </div>

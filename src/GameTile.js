@@ -15,6 +15,7 @@ class GameTile extends Component {
             <li>
                 <h3>This is a {this.props.photoType}</h3>
                 <img src={this.props.imgSrc} alt={"a nice "+this.props.photoType}/>
+                <p>TODO handle button click for gameplay</p>
                 <button>{this.props.buttonText}</button>
             </li>
         )
