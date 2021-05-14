@@ -9,9 +9,16 @@ class GameBoard extends Component {
             ganFirst: false
         }
     }
+    // TODO add currentRound, maxRounds to state HERE (not in App.js)
+    // TODO define handler for cat-selection button clicks HERE and pass to 
+    //   GameTile in props. The handler should report back so that game state
+    //   can be updated here. Each click is recorded as correct or not, and 
+    //   triggers gameplay to advance to next round.
+    // TODO Gameboard determines when game ends (i.e. when currentRound = maxRounds)
+    // TODO Gameboard then writes the user's final score to Firebase and 
+    //   returns control to parent so it can show the Summary view. HOW TO DO?
 
     // properties: photoType = Cat or Person
-    // currentRound, maxRounds
     // TODO flip ganFirst randomly between true/false in each round
 
     render() {
