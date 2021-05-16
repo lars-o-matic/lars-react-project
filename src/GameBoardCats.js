@@ -19,7 +19,6 @@ class GameBoard extends Component {
     // props: photoType = Cat or Person DEPRECATED: just do Cat
     // maxRounds = how many rounds define the game
     // handleGameIsOver = function from parent, takes boolean
-    // TODO flip ganFirst randomly between true/false in each round
 
     // state: currentRound = 0..maxRounds
     //   currentScore
@@ -39,13 +38,13 @@ class GameBoard extends Component {
         //   currentRound changed
         //     subcase: currentRound is after maxRounds
         if (this.state.currentRound !== prevState.currentRound){
-            const gameIsOver = (this.state.currentRound >= this.props.maxRounds);
+            const gameIsOver = (this.state.currentRound > this.props.maxRounds);
             if (gameIsOver) {
                 // calculate game result
                 // allow that user might exit before maxRounds
                 const gameData = {
                     score: this.state.currentScore,
-                    rounds: this.state.currentRound,
+                    rounds: prevState.currentRound,
                     maxRounds: this.props.maxRounds
                 };
                 // notify App
@@ -82,9 +81,7 @@ class GameBoard extends Component {
         }
         //console.log(ary);
         // setState the CatDataArray
-        const theCurrentRound = this.state.currentRound;
         this.setState({
-            currentRound: theCurrentRound,
             catDataArray: ary
         });
         //console.log(this.state);
@@ -103,7 +100,6 @@ class GameBoard extends Component {
         // advance to the next round
         const nextRound = this.state.currentRound + 1;
         this.setState({
-            //...this.state,
             currentScore: newScore,
             currentRound: nextRound
         });
@@ -115,7 +111,7 @@ class GameBoard extends Component {
         return (
             <div className="game-board">
                 <h3>Round {this.state.currentRound} of {this.props.maxRounds}</h3>
-                <p>Current score {this.state.currentScore} / {this.state.currentRound + 1}</p>
+                <p>Current score {this.state.currentScore} / {this.state.currentRound - 1}</p>
                 <p>Can you guess the Real photo below?</p>
                 <div>
                     <ul className="game-tiles">
