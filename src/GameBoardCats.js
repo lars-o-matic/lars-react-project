@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GameTile from './GameTile';
+import GameVoteResult from './GameVoteResult';
 import sampleCat from './images/cat-placeholder-512-7aFH8GK.jpg'
 
 class GameBoard extends Component {
@@ -10,6 +11,8 @@ class GameBoard extends Component {
             {imgSrc: "", isReal: false}
         ];
         this.state = {
+            showResult: false,
+            voteWasCorrect: false,
             currentRound: 1,
             currentScore: 0,
             catDataArray: initialCatDataArray
@@ -50,46 +53,65 @@ class GameBoard extends Component {
                 // notify App
                 this.props.handleGameIsOver(gameData);
             } else {
-            // get data for the next round, update state
+            // get data for the next round, put cat data into state
                 this.fetchData();
             }
         }
     }
         
-    fetchData() {
+    fetchData = () => {
         // calls API, updates state with a call to this.setState(...)
+        const ganCatApiUrl = "https://thiscatdoesnotexist.com/?v="
+            + this.state.currentRound;
+        const realCatBaseUrl = "https://cataas.com";
+        const realCatApiUrl = "/cat?type=sq&width=512&json=true";
         // put both CatData objects into a CatDataArray
         const ary = [];
 
-        // TODO Get a new GAN cat into a CatData object
+        // Get a new GAN cat into a CatData object
+        // NOTE returned image is always 512x512 px
+        // NOTE the image is at the URL itself - no JSON data
+        // TODO append random query string to ensure non-cached image?
+        // TODO is there any way at all to specify return image params?
         const ganCat = {
-            imgSrc: "https://thiscatdoesnotexist.com/",
+            imgSrc: ganCatApiUrl,
             isReal: false
         };
         ary.push(ganCat);
 
-        // TODO Get a new Real Cat from API ditto
-        const realCat = {
-            imgSrc: sampleCat,
-            isReal: true
-        };
-        ary.push(realCat);
-
-        // randomly swap the two objects in the array, 50% chance
-        if (Math.random() > 0.5){
-            ary.reverse();
+        // Get a new Real Cat from API ditto
+        const fetchRealCatData = async () => {
+            try {
+                const response = await fetch(realCatBaseUrl+realCatApiUrl);
+                const apiData = await response.json();
+                //console.log(apiData);
+                
+                const realCat = {
+                    imgSrc: apiData 
+                        ? (apiData.url ? realCatBaseUrl+apiData.url : sampleCat)
+                        : sampleCat,
+                    isReal: true
+                };
+                ary.push(realCat);
+        
+                // randomly swap the two objects in the array, 50% chance
+                if (Math.random() > 0.5){
+                    ary.reverse();
+                }
+                // setState the CatDataArray
+                this.setState({
+                    catDataArray: ary
+                });
+            } catch(error) {
+                console.log(error);
+            }
         }
-        //console.log(ary);
-        // setState the CatDataArray
-        this.setState({
-            catDataArray: ary
-        });
-        //console.log(this.state);
+        fetchRealCatData();
     }
 
     handleVote = (e) => {
-        // console.log("you clicked to vote! e.target = ...");
-        // console.log(e.target);
+        // TODO display "Correct!" or "Sorry..." to user in an overlay with a "More cats" button
+        // TODO advance to next round only when that button is clicked
         e.preventDefault();
         // tabulate correct guesses
         // note: button value attribute is read as string
@@ -97,22 +119,42 @@ class GameBoard extends Component {
             ? this.state.currentScore + 1
             : this.state.currentScore;
         
-        // advance to the next round
+        // show result of this round
+        this.setState({
+            showResult: true,
+            voteWasCorrect: (e.target.value === 'true'),
+            currentScore: newScore,
+        });
+        // console.log("state in GameBoardCats in handleVote:")
+        // console.log(this.state);
+    }
+
+    handleAdvanceToNextRound = (e) => {
+        e.preventDefault();
+
+        // dismiss Results, advance to the next round
         const nextRound = this.state.currentRound + 1;
         this.setState({
-            currentScore: newScore,
-            currentRound: nextRound
+            showResult: false,
+            currentRound: nextRound,
         });
-        console.log("state in GameBoardCats in handleVote:")
-        console.log(this.state);
     }
 
     render() {
         return (
             <div className="game-board">
                 <h3>Round {this.state.currentRound} of {this.props.maxRounds}</h3>
+                {this.state.showResult
+                ? <GameVoteResult
+                    voteResult={this.state.voteWasCorrect ? "Correct!" : "Sorry..."}
+                    buttonText={this.state.currentRound < this.props.maxRounds
+                        ? "Load more Cats!" : "See final score"}
+                    handleAdvanceToNextRound={this.handleAdvanceToNextRound} />
+                : <>
                 <p>Current score {this.state.currentScore} / {this.state.currentRound - 1}</p>
                 <p>Can you guess the Real photo below?</p>
+                </>
+                }
                 <div>
                     <ul className="game-tiles">
                     <>

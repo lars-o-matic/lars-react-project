@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
 class GameTile extends Component {
-    constructor() {
-        super();
-    }
+    // hide constructor if no extra logic, else React gives warning
+    // constructor() {
+    //     super();
+    // }
 
     // properties: photoType = Cat or Person
     //   imgSrc = URL to the photo
