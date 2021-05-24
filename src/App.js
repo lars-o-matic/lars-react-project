@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 import './App.css';
 import './Game.module.css';
+import Welcome from './Welcome';
+import Setup from './Setup';
 import GameBoardCats from './GameBoardCats';
-// TODO GameBoardPersons to support Is It A Real Person option
-
-//import GameTile from './GameTile';
+import GameSummary from './GameSummary';
+import ScoreBoard from './ScoreBoard';
 
 class App extends Component {
   constructor() {
@@ -44,43 +52,36 @@ class App extends Component {
 
   render() {
     return (
+      <Router>
       <div className="App">
-        <section id="intro">
-          <h1>Real Photo or AI?</h1>
-          <p><strong>TODO</strong> Welcome screen, explain the rules</p>
-          <p><strong>TODO</strong> Game screen styling!</p>
-          <p><strong>TODO</strong> after the last round, display the player's score, and record it in the game's scores database tagged with the player's name. Retrieve and display high scores to date.</p>
-          <p><strong>TODO</strong> Stats screen, show high scores</p>
-        </section>
-        <section id="setup">
-          <h2>Set up your game</h2>
-          <p><strong>TODO</strong> player username input</p>
-          <p><strong>DEPRECATED</strong> offer choice of Cat or Person</p>
-          <p><strong>TODO</strong> player picks max. rounds of play</p>
-          <button onClick={this.handleStartGame}>Start a game!</button>
-        </section>
-        { this.state.isGameActive && 
-        <section id="game">
-          <h2>Real {this.state.photoType} or GAN?</h2>
-
-          {/* TODO how can we tell when the game is over? 
-          Can the GameBoard signal when currentRound >= maxRounds? */}
-          <GameBoardCats 
-            maxRounds={this.state.maxRounds}
-            handleGameIsOver={this.handleGameIsOver}
-            />
-        </section>
-        }
-        { !this.state.isGameActive && this.state.userHasPlayed &&
-        <section id="summary">
-          <h2>Here's how you did</h2>
-          <p><strong>TODO</strong> encapsulate game summary into its own component</p>
-          <p>You played {this.state.userGameData.rounds} out of {this.state.userGameData.maxRounds} rounds and guessed {this.state.userGameData.score} correctly!</p>
-        </section>
-        }
-      </div>
+        <h1>CATS YO</h1>
+        <Switch>
+          <Route exact path="/">
+            <Welcome />
+          </Route>
+          <Route path="/setup">
+            <Setup handleStartGame={this.handleStartGame} />
+          </Route>
+          <Route path="/play">
+            {/* when this.state.isGameActive show it*/}
+            <GameBoardCats 
+              maxRounds={this.state.maxRounds}
+              handleGameIsOver={this.handleGameIsOver}
+              />
+          </Route>
+          <Route path="/summary">
+            {/* visible when !this.state.isGameActive && this.state.userHasPlayed */}
+            <GameSummary userGameData={this.state.userGameData} />
+          </Route>
+          <Route path="/scores">
+            {/* what props do we pass to ScoreBoard? */}
+            <ScoreBoard />
+          </Route>
+        </Switch>
+        </div>
+      </Router>
     );
-}
+  }
 }
 
 export default App;

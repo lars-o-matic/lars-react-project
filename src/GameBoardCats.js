@@ -142,6 +142,8 @@ class GameBoard extends Component {
 
     render() {
         return (
+        <section id="game">
+            <h2>Real {this.state.photoType} or GAN?</h2>
             <div className="game-board">
                 <h3>Round {this.state.currentRound} of {this.props.maxRounds}</h3>
                 {this.state.showResult
@@ -172,6 +174,7 @@ class GameBoard extends Component {
                     </ul>
                 </div>
             </div>
+        </section>
         )
     }
 }
