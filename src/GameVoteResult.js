@@ -13,8 +13,9 @@ class GameVoteResult extends Component {
 
     render(){
         return(
-            <div>
+            <div className="voteResult">
                 <h3>{this.props.voteResult}</h3>
+                <p><strong>TODO</strong> show a "Loading..." element when refreshing the Cat photos until both are loaded</p>
                 <button onClick={this.props.handleAdvanceToNextRound}>{this.props.buttonText}</button>
             </div>
         );

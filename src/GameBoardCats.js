@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
 import GameTile from './GameTile';
 import GameVoteResult from './GameVoteResult';
-import sampleCat from './images/cat-placeholder-512-7aFH8GK.jpg'
+import sampleCat from './images/cat-placeholder-512-7aFH8GK.jpg';
+import loaderImg from './images/loading_progressring.gif';
 
 class GameBoard extends Component {
     constructor() {
@@ -15,7 +17,10 @@ class GameBoard extends Component {
             voteWasCorrect: false,
             currentRound: 1,
             currentScore: 0,
-            catDataArray: initialCatDataArray
+            showLoading: false,
+            showVoteControls: true,
+            catDataArray: initialCatDataArray,
+            gameIsOver: false,
         }
     }
 
@@ -52,6 +57,8 @@ class GameBoard extends Component {
                 };
                 // notify App
                 this.props.handleGameIsOver(gameData);
+                // advance to the Summary view
+                this.setState({gameIsOver: gameIsOver});
             } else {
             // get data for the next round, put cat data into state
                 this.fetchData();
@@ -61,6 +68,7 @@ class GameBoard extends Component {
         
     fetchData = () => {
         // calls API, updates state with a call to this.setState(...)
+        this.setState({showLoading: true});
         const ganCatApiUrl = "https://thiscatdoesnotexist.com/?v="
             + this.state.currentRound;
         const realCatBaseUrl = "https://cataas.com";
@@ -100,7 +108,8 @@ class GameBoard extends Component {
                 }
                 // setState the CatDataArray
                 this.setState({
-                    catDataArray: ary
+                    catDataArray: ary,
+                    showLoading: false
                 });
             } catch(error) {
                 console.log(error);
@@ -122,6 +131,7 @@ class GameBoard extends Component {
         // show result of this round
         this.setState({
             showResult: true,
+            showVoteControls: false,
             voteWasCorrect: (e.target.value === 'true'),
             currentScore: newScore,
         });
@@ -136,6 +146,7 @@ class GameBoard extends Component {
         const nextRound = this.state.currentRound + 1;
         this.setState({
             showResult: false,
+            showVoteControls: true,
             currentRound: nextRound,
         });
     }
@@ -143,9 +154,9 @@ class GameBoard extends Component {
     render() {
         return (
         <section id="game">
-            <h2>Real {this.state.photoType} or GAN?</h2>
+            <h2>Real {this.state.photoType} photo or AI? round {this.state.currentRound} of {this.props.maxRounds}</h2>
             <div className="game-board">
-                <h3>Round {this.state.currentRound} of {this.props.maxRounds}</h3>
+                {/* <h3>Round {this.state.currentRound} of {this.props.maxRounds}</h3> */}
                 {this.state.showResult
                 ? <GameVoteResult
                     voteResult={this.state.voteWasCorrect ? "Correct!" : "Sorry..."}
@@ -159,21 +170,29 @@ class GameBoard extends Component {
                 }
                 <div>
                     <ul className="game-tiles">
-                    <>
+                    {this.state.showLoading
+                    ? <>
+                      <li><img src={loaderImg} width="512" height="512" alt="Loading cat..." /></li>
+                      <li><img src={loaderImg} width="512" height="512" alt="Loading cat..." /></li>
+                    </>
+                    : <>
                         <GameTile photoType="Cat"
                             imgSrc={this.state.catDataArray[0].imgSrc}
                             isReal={this.state.catDataArray[0].isReal}
                             buttonText="I'm the real Cat"
+                            showControls={this.state.showVoteControls}
                             handleVote={this.handleVote} />
                         <GameTile photoType="Cat"
                             imgSrc={this.state.catDataArray[1].imgSrc}
                             isReal={this.state.catDataArray[1].isReal}
                             buttonText="No, I'm the real Cat!"
+                            showControls={this.state.showVoteControls}
                             handleVote={this.handleVote} />
-                    </>
+                    </>}
                     </ul>
                 </div>
             </div>
+            {this.state.gameIsOver && <Redirect to="/summary" />}
         </section>
         )
     }

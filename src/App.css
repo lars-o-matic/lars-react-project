@@ -18,9 +18,29 @@
   color: #61dafb;
 }
 
-section#game {
-  text-align: center;
+#intro, #setup, #game, #summary, #scores {
   max-width: 1200px;
+  /* display: flex; */
+  text-align: center;
+  justify-content: center;
+  /* background-color: yellow; */
+}
+#intro > * {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+#setup > div, #setup > form {
+  max-width: 600px;
+  margin: auto;
+  display: block;
+  /* background-color: gray; */
+  text-align: left;
+}
+.error {
+  color: red;
+  display: block;
 }
 
 ul.game-tiles {
@@ -35,6 +55,10 @@ ul.game-tiles li {
   padding: 0 15px;
 }
 .game-tiles img {
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 512px;
+  max-height: 512px;
+}
+
+.voteResult {
+  /* TODO style the div showing result after each vote */
 }

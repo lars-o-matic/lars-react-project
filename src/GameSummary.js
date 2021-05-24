@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link, Redirect } from "react-router-dom";
 
 class GameSummary extends Component {
     // no constructor logic
@@ -9,7 +10,12 @@ class GameSummary extends Component {
             <h2>Here's how you did</h2>
             <p><strong>TODO</strong> fancy up this component!</p>
             <p>You played {this.props.userGameData.rounds} out of {this.props.userGameData.maxRounds} rounds and guessed {this.props.userGameData.score} correctly!</p>
-            <p><strong>TODO</strong> add Links to play a new game, or to view high scores, or to setup a new player.</p>
+
+            <ul>
+              <li><Link to="/play">Play again</Link></li>
+              <li><Link to="/scores">See the Score Board</Link></li>
+              <li><Link to="/setup">New player</Link></li>
+            </ul>
         </section>
         );
     }

@@ -3,7 +3,9 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useHistory,
+  withRouter
 } from "react-router-dom";
 
 import './App.css';
@@ -21,7 +23,8 @@ class App extends Component {
       score: 0,
       rounds: 0,
       maxRounds: 0
-  };
+    };
+    // TODO with Router, deprecate isGameActive and userHasPlayed???
     this.state = {
       photoType: "Cat",
       maxRounds: 5,
@@ -32,14 +35,27 @@ class App extends Component {
     }
   }
 
-  handleStartGame = (event) => {
-    event.preventDefault();
+
+  // handleStartGame = (event) => {
+  //   event.preventDefault();
+  //   this.setState({
+  //     isGameActive: true
+  //   });
+  // }
+
+  // Setup sets username and maxRounds
+  handleSetup = (name, rounds) => {
     this.setState({
-      isGameActive: true
+      maxRounds: rounds,
+      currentUser: name,
     });
+    // can't use React-Router history here - hook doesn't work in Class components
+    // instead, Setup will perform the Redirect to /play
   }
+
   handleGameIsOver = (gameData) => {
-    // do we need gameIsOver param? what if user exits game before maxRounds?
+    // do we need isGameActive and userHasPlayed? 
+    // TODO allow for user to exit game before maxRounds?
     console.log("The game is over!");
     this.setState({
       isGameActive: false,
@@ -60,7 +76,7 @@ class App extends Component {
             <Welcome />
           </Route>
           <Route path="/setup">
-            <Setup handleStartGame={this.handleStartGame} />
+            <Setup handleSetup={this.handleSetup} />
           </Route>
           <Route path="/play">
             {/* when this.state.isGameActive show it*/}
