@@ -8,13 +8,14 @@ import {
   withRouter
 } from "react-router-dom";
 
-import './App.css';
-import './Game.module.css';
 import Welcome from './Welcome';
 import Setup from './Setup';
 import GameBoardCats from './GameBoardCats';
 import GameSummary from './GameSummary';
 import ScoreBoard from './ScoreBoard';
+import firebase from './firebase';
+import './App.css';
+import './Game.module.css';
 
 class App extends Component {
   constructor() {
