@@ -53,8 +53,8 @@ class ScoreBoard extends Component {
           <thead>
             <tr>
               <th>Player</th>
-              <th>Score (%)</th>
               <th>Score</th>
+              <th>(%)</th>
               <th>Date</th>
             </tr>
           </thead>
@@ -64,9 +64,9 @@ class ScoreBoard extends Component {
           return(
             <tr>
               <td>{row.userName}</td>
-              <td>{row.percentage}%</td>
               <td>{row.score} / {row.rounds}</td>
-              <td>{date.toDateString()}</td>
+              <td>{row.percentage}%</td>
+              <td>{date.toDateString()} at {date.toLocaleTimeString()}</td>
             </tr>);
           })}
           </tbody>

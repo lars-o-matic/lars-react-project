@@ -8,11 +8,11 @@ class GameSummary extends Component {
         return (
         <section id="summary">
             <h2>Here's how you did</h2>
-            <p>You played {this.props.userGameData.rounds} out of {this.props.userGameData.maxRounds} rounds and guessed {this.props.userGameData.score} correctly!</p>
+            <p>You picked the right cat in {this.props.userGameData.score} out of {this.props.userGameData.rounds} rounds!</p>
 
             <ul>
+            <li><Link to="/scores">See the Score Board</Link></li>
               <li><Link to="/play">Play again</Link></li>
-              <li><Link to="/scores">See the Score Board</Link></li>
               <li><Link to="/setup">New player</Link></li>
             </ul>
         </section>

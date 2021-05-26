@@ -73,7 +73,7 @@ class App extends Component {
     return (
       <Router>
       <div className="App">
-        <h1>CATS YO</h1>
+        <h1>😺 CATS YO 🙀</h1>
         <Switch>
           <Route exact path="/">
             <Welcome />

@@ -160,7 +160,7 @@ class GameBoard extends Component {
             <div className="game-board">
                 {this.state.showResult
                 ? <GameVoteResult
-                    voteResult={this.state.voteWasCorrect ? "Correct!" : "Sorry..."}
+                    voteResult={this.state.voteWasCorrect ? "Correct! 😺" : "Sorry... you got fooled 🙀"}
                     buttonText={this.state.currentRound < this.props.maxRounds
                         ? "Load more Cats!" : "See final score"}
                     handleAdvanceToNextRound={this.handleAdvanceToNextRound} />

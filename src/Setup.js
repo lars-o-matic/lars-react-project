@@ -5,7 +5,6 @@ class Setup extends Component {
   // props:
   //   handleSetup = passed-in function; args = username, maxRounds
 
-
   // constructor sets local state for user input
   // TODO must set those back into global state for use by App!
   constructor() {
