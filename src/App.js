@@ -3,9 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useHistory,
-  withRouter
 } from "react-router-dom";
 
 import Welcome from './Welcome';
@@ -20,51 +17,56 @@ import './Game.module.css';
 class App extends Component {
   constructor() {
     super();
+    // do we need maxRounds in userGameData? should always be same as global maxRounds
     const initGameData = {
+      userName: "",
       score: 0,
       rounds: 0,
       maxRounds: 0
     };
-    // TODO with Router, deprecate isGameActive and userHasPlayed???
     this.state = {
       photoType: "Cat",
-      maxRounds: 5,
-      isGameActive: false,
-      userHasPlayed: false,
-      currentUser: "Foo Blechly",
       userGameData: initGameData
     }
   }
 
-
-  // handleStartGame = (event) => {
-  //   event.preventDefault();
-  //   this.setState({
-  //     isGameActive: true
-  //   });
-  // }
-
   // Setup sets username and maxRounds
   handleSetup = (name, rounds) => {
     this.setState({
-      maxRounds: rounds,
-      currentUser: name,
+      userGameData: {
+        userName: name,
+        score: 0,
+        rounds: 0,
+        maxRounds: rounds,
+      }
     });
-    // can't use React-Router history here - hook doesn't work in Class components
-    // instead, Setup will perform the Redirect to /play
+    // Setup will perform the Redirect to /play
   }
 
   handleGameIsOver = (gameData) => {
-    // do we need isGameActive and userHasPlayed? 
     // TODO allow for user to exit game before maxRounds?
-    console.log("The game is over!");
     this.setState({
-      isGameActive: false,
-      userHasPlayed: true,
       userGameData: gameData
     });
-    // set view state, save gameData tagged with user's name and date
-    // setting isGameActive should trigger change of view state
+    console.log("gameData:", gameData);
+    // save gameData tagged with user's name and date
+    this.writeToScoreBoard(gameData);
+  }
+
+  writeToScoreBoard = (gameData) => {
+    // write a final game score to Firebase database
+    // a record should have:
+    //   timestamp, currentUser, score, rounds, maxRounds (of the game the user played)
+    const scoreBoardData = {
+      createdDate: Date.now(),
+      userName: gameData.userName,
+      score: gameData.score,
+      rounds: gameData.rounds,
+      maxRounds: gameData.maxRounds
+    };
+    const scoreBoardRef = firebase.database().ref('/cat-game-scoreboard');
+    const newRecord = scoreBoardRef.push(scoreBoardData);
+    console.log("new record:", newRecord);
   }
 
   render() {
@@ -80,19 +82,17 @@ class App extends Component {
             <Setup handleSetup={this.handleSetup} />
           </Route>
           <Route path="/play">
-            {/* when this.state.isGameActive show it*/}
             <GameBoardCats 
-              maxRounds={this.state.maxRounds}
+              maxRounds={this.state.userGameData.maxRounds}
+              userName={this.state.userGameData.userName}
               handleGameIsOver={this.handleGameIsOver}
               />
           </Route>
           <Route path="/summary">
-            {/* visible when !this.state.isGameActive && this.state.userHasPlayed */}
             <GameSummary userGameData={this.state.userGameData} />
           </Route>
           <Route path="/scores">
-            {/* what props do we pass to ScoreBoard? */}
-            <ScoreBoard />
+            <ScoreBoard topN={5} canPlayAgain={this.state.userGameData.userName!==""}/>
           </Route>
         </Switch>
         </div>

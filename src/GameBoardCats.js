@@ -24,8 +24,9 @@ class GameBoard extends Component {
         }
     }
 
-    // props: photoType = Cat or Person DEPRECATED: just do Cat
+    // props:
     // maxRounds = how many rounds define the game
+    // userName = player's name entered in Setup
     // handleGameIsOver = function from parent, takes boolean
 
     // state: currentRound = 0..maxRounds
@@ -42,7 +43,7 @@ class GameBoard extends Component {
     componentDidUpdate(prevProps, prevState) {
         // here is anything we want to happen after the component has been updated.
         // Use the previous values to check if you should perform any logic.
-        // cases: user's score changed
+        // cases: 
         //   currentRound changed
         //     subcase: currentRound is after maxRounds
         if (this.state.currentRound !== prevState.currentRound){
@@ -51,9 +52,10 @@ class GameBoard extends Component {
                 // calculate game result
                 // allow that user might exit before maxRounds
                 const gameData = {
-                    score: this.state.currentScore,
-                    rounds: prevState.currentRound,
-                    maxRounds: this.props.maxRounds
+                  userName: this.props.userName,
+                  score: this.state.currentScore,
+                  rounds: prevState.currentRound,
+                  maxRounds: this.props.maxRounds
                 };
                 // notify App
                 this.props.handleGameIsOver(gameData);
@@ -156,7 +158,6 @@ class GameBoard extends Component {
         <section id="game">
             <h2>Real {this.state.photoType} photo or AI? round {this.state.currentRound} of {this.props.maxRounds}</h2>
             <div className="game-board">
-                {/* <h3>Round {this.state.currentRound} of {this.props.maxRounds}</h3> */}
                 {this.state.showResult
                 ? <GameVoteResult
                     voteResult={this.state.voteWasCorrect ? "Correct!" : "Sorry..."}

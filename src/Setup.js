@@ -27,14 +27,11 @@ class Setup extends Component {
 
     const isRoundsInteger = Number.isInteger(this.state.howManyRounds);
     const isRoundsPositive = (this.state.howManyRounds > 0);
-    console.log("isRoundsInteger, isRoundsPositive:");
-    console.log(isRoundsInteger, isRoundsPositive);
-
     const isRoundsValid = isRoundsInteger && isRoundsPositive;
     this.setState({roundsIsError: !isRoundsValid});
     if (isNameValid && isRoundsValid) {
       this.props.handleSetup(this.state.username, this.state.howManyRounds);
-      //this.props.history.push("/play");
+      //this.context.history.push("/play");
       this.setState({doRedirect: true});
     }
   }
@@ -44,9 +41,6 @@ class Setup extends Component {
     <section id="setup">
       <div>
         <h2>Set up your game</h2>
-
-        <p><strong>TODO</strong> Form with inputs for player username and maxRounds (default 10?)</p>
-        <p><strong>TODO</strong> on submit, the handler should redirect to the /play route</p>
       </div>
 
       <form action="">

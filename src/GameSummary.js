@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class GameSummary extends Component {
     // no constructor logic
@@ -8,7 +8,6 @@ class GameSummary extends Component {
         return (
         <section id="summary">
             <h2>Here's how you did</h2>
-            <p><strong>TODO</strong> fancy up this component!</p>
             <p>You played {this.props.userGameData.rounds} out of {this.props.userGameData.maxRounds} rounds and guessed {this.props.userGameData.score} correctly!</p>
 
             <ul>

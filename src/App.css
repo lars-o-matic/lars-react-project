@@ -1,21 +1,11 @@
 .App {
   text-align: left;
   padding: 10px 20px;
+  font-size: calc(10px + 1vmin);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+section, section > * {
+  position: relative;
 }
 
 #intro, #setup, #game, #summary, #scores {
@@ -25,22 +15,56 @@
   justify-content: center;
   /* background-color: yellow; */
 }
-#intro > * {
+#intro > *, #setup > *, #summary > *, #scores > * {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
   text-align: left;
 }
-#setup > div, #setup > form {
-  max-width: 600px;
-  margin: auto;
+#setup > form {
   display: block;
-  /* background-color: gray; */
-  text-align: left;
 }
 .error {
   color: red;
   display: block;
+}
+
+#scores > table {
+  width: 100%;
+}
+table caption {
+  font-weight: bold;
+  font-size: 115%;
+  text-align: left;
+}
+.footnote {
+  font-style: italic;
+  font-size: 90%;
+}
+
+label, input {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: inline-block;
+}
+input {
+  position: absolute;
+  right: 20px;
+  font-size: 100%;
+}
+input[type=text] {
+  width: 50%;
+}
+input[type=number] {
+  width: 4em;
+}
+
+button {
+  width: max-content;
+  font-size: 100%;
+  margin: auto;
 }
 
 ul.game-tiles {
