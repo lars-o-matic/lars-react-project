@@ -16,7 +16,7 @@ class Welcome extends Component {
 
                 <div className="colophon">
                   <h3>Colophon</h3>
-                  <p>This project was bootstrapped with <a href="https://github.com/facebook/create-react-app" target="_blank">Create React App</a> and uses React-Router and Firebase, among other libraries.</p>
+                  <p>This project was bootstrapped with <a href="https://github.com/facebook/create-react-app" rel="noreferrer" target="_blank">Create React App</a> and uses React-Router and Firebase, among other libraries.</p>
                   <p>Services used include:</p>
                   <ul>
                     <li><a href="https://github.com/" rel="noreferrer" target="_blank">GitHub</a> for my git repo and authentication</li>
