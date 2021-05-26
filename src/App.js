@@ -30,6 +30,9 @@ class App extends Component {
     }
   }
 
+  // Global properties
+  scoreBoardTopN = 10;
+
   // Setup sets username and maxRounds
   handleSetup = (name, rounds) => {
     this.setState({
@@ -76,7 +79,7 @@ class App extends Component {
         <h1>😺 CATS YO 🙀</h1>
         <Switch>
           <Route exact path="/">
-            <Welcome />
+            <Welcome topN={this.scoreBoardTopN} />
           </Route>
           <Route path="/setup">
             <Setup handleSetup={this.handleSetup} />
@@ -92,7 +95,7 @@ class App extends Component {
             <GameSummary userGameData={this.state.userGameData} />
           </Route>
           <Route path="/scores">
-            <ScoreBoard topN={5} canPlayAgain={this.state.userGameData.userName!==""}/>
+            <ScoreBoard topN={this.scoreBoardTopN} canPlayAgain={this.state.userGameData.userName!==""}/>
           </Route>
         </Switch>
         </div>

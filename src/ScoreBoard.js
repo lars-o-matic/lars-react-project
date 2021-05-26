@@ -21,10 +21,10 @@ class ScoreBoard extends Component {
       const rawData = snapshot.val();
       const highScores = [];
       // populate array with row objects, each having: createdDate, userName, score, rounds, calculated percentage
-      for (let key in rawData) {
-        const { createdDate, userName, score, rounds } = rawData[key];
+      for (let id in rawData) {
+        const { createdDate, userName, score, rounds } = rawData[id];
         const percentage = Math.round(1000 * score / rounds) / 10;
-        highScores.push({ key, createdDate, userName, score, rounds, percentage });
+        highScores.push({ id, createdDate, userName, score, rounds, percentage });
       }
 
       highScores.sort((a, b) => {
@@ -59,10 +59,10 @@ class ScoreBoard extends Component {
             </tr>
           </thead>
           <tbody>
-          {this.state.scores.map((row, key) => {
+          {this.state.scores.map((row) => {
           let date = new Date(row.createdDate);
           return(
-            <tr>
+            <tr key={row.id}>
               <td>{row.userName}</td>
               <td>{row.score} / {row.rounds}</td>
               <td>{row.percentage}%</td>
