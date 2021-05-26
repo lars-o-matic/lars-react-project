@@ -21,6 +21,10 @@ section, section > * {
   margin-right: auto;
   text-align: left;
 }
+#intro > a {
+  display: block;
+  text-align: center;
+}
 #setup > form {
   display: block;
 }
@@ -44,10 +48,14 @@ table caption {
   font-size: 80%;
 }
 
+.colophon {
+  font-size: 80%;
+  margin-top: 2em;
+}
+
 label, input {
   margin-bottom: 1rem;
 }
-
 label {
   display: inline-block;
 }
